@@ -1,3 +1,9 @@
+# 1.x (unreleased)
+
+## Workspace
+
+- Bump depends
+
 # 1.0.4
 
 ## Lib
