@@ -29,6 +29,10 @@ export enum TranslationService {
    * The total limit of characters per request is 50k chars
    */
   msedge = "msedge",
+  /**
+   * The total limit of characters per request is 1k chars
+   */
+  bing = "bing",
 }
 
 export type TranslationOpts = {
