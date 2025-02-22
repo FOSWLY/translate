@@ -7,6 +7,7 @@ import {
   DetectResponse,
   GetLangsResponse,
   ProviderResponse,
+  ProviderSuccessResponse,
   RequestMethod,
   TranslationResponse,
 } from "@/types/providers/base";
@@ -55,6 +56,27 @@ export default class BaseProvider {
 
   isValidUrl(url: string | undefined): url is string {
     return /^(http(s)?):\/\//.test(String(url));
+  }
+
+  isSuccessProviderRes<T>(
+    res: ProviderResponse<T>,
+  ): res is ProviderSuccessResponse<T> {
+    return res.success;
+  }
+
+  parseLang(lang: Lang) {
+    const [fromLang, ...toLangParts] = lang.split("-");
+    if (!toLangParts.length) {
+      return {
+        fromLang: this.baseLang,
+        toLang: fromLang,
+      };
+    }
+
+    return {
+      fromLang,
+      toLang: toLangParts.join("-"),
+    };
   }
 
   getOpts(

@@ -7,7 +7,6 @@ import {
   DetectResponse,
   GetLangsResponse,
   ProviderResponse,
-  ProviderSuccessResponse,
   RequestMethod,
   TranslationResponse,
 } from "@/types/providers/base";
@@ -42,7 +41,7 @@ export default class YandexTranslateProvider extends BaseProvider {
     "Content-Type": "application/x-www-form-urlencoded",
     "User-Agent": config.userAgent,
   };
-  session: Session | null = null;
+  session?: Session;
 
   constructor(options: BaseProviderOpts = {}) {
     super(options);
@@ -110,12 +109,6 @@ export default class YandexTranslateProvider extends BaseProvider {
     return res.status > 399 || Object.hasOwn(data, "message");
   }
 
-  isSuccessProviderRes<T>(
-    res: ProviderResponse<T>,
-  ): res is ProviderSuccessResponse<T> {
-    return res.success;
-  }
-
   async request<T extends object>(
     path: string,
     body: URLSearchParams | null = null,
@@ -168,12 +161,7 @@ export default class YandexTranslateProvider extends BaseProvider {
       text = [text];
     }
 
-    let [fromLang, toLang] = lang.split("-");
-    if (!toLang) {
-      toLang = fromLang;
-      fromLang = this.baseLang;
-    }
-
+    const { fromLang, toLang } = this.parseLang(lang);
     const { id: sid } = await this.getSession();
     const params = this.getParams("tr-text", {
       sid: `${sid}-5-0`,
@@ -226,7 +214,6 @@ export default class YandexTranslateProvider extends BaseProvider {
     lang: Lang = "en-ru",
   ): Promise<TranslationResponse> {
     const res = await this.rawTranslate(text, lang);
-
     const { lang: resLang, translations } = res;
 
     return {
@@ -266,12 +253,12 @@ export default class YandexTranslateProvider extends BaseProvider {
     }
 
     if (probs) {
-      probs = Object.entries(probs).reduce(
+      probs = Object.entries(probs).reduce<Record<Lang, number>>(
         (result, [key, val]) => {
           result[key] = Math.round(val * -100);
           return result;
         },
-        {} as Record<Lang, number>,
+        {},
       );
     }
 
@@ -291,7 +278,6 @@ export default class YandexTranslateProvider extends BaseProvider {
    */
   async detect(text: string): Promise<DetectResponse> {
     const { score, lang } = await this.rawDetect(text);
-
     return {
       lang,
       score,

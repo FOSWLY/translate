@@ -7,7 +7,6 @@ import {
   DetectResponse,
   GetLangsResponse,
   ProviderResponse,
-  ProviderSuccessResponse,
   RequestMethod,
   TranslationResponse,
 } from "@/types/providers/base";
@@ -67,12 +66,6 @@ export default class YandexCloudProvider extends BaseProvider {
     return res.status > 399 || Object.hasOwn(data, "message");
   }
 
-  isSuccessProviderRes<T>(
-    res: ProviderResponse<T>,
-  ): res is ProviderSuccessResponse<T> {
-    return res.success;
-  }
-
   async request<T extends object>(
     path: string,
     body: unknown = null,
@@ -111,12 +104,7 @@ export default class YandexCloudProvider extends BaseProvider {
       text = [text];
     }
 
-    let [fromLang, toLang] = lang.split("-");
-    if (!toLang) {
-      toLang = fromLang;
-      fromLang = this.baseLang;
-    }
-
+    const { fromLang, toLang } = this.parseLang(lang);
     const res = await this.request<TranslateSuccessResponse>(
       "/translate",
       JSON.stringify({
@@ -177,8 +165,7 @@ export default class YandexCloudProvider extends BaseProvider {
       throw new GetLangsError(res.data);
     }
 
-    const languageItems = res.data.languages;
-    return languageItems
+    return res.data.languages
       .map((lang) => lang.code)
       .filter((lang) => lang !== this.baseLang);
   }

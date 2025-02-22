@@ -7,7 +7,6 @@ import {
   DetectResponse,
   GetLangsResponse,
   ProviderResponse,
-  ProviderSuccessResponse,
   RequestMethod,
   TranslationResponse,
 } from "@/types/providers/base";
@@ -84,12 +83,6 @@ export default class YandexBrowserProvider extends BaseProvider {
     return res.status > 399 || data.code > 399;
   }
 
-  isSuccessProviderRes<T>(
-    res: ProviderResponse<T>,
-  ): res is ProviderSuccessResponse<T> {
-    return res.success;
-  }
-
   isMinimalResponse(data: object): data is MinimalResponse {
     return Object.hasOwn(data, "code");
   }
@@ -153,7 +146,6 @@ export default class YandexBrowserProvider extends BaseProvider {
     }
 
     const { lang: resLang, text: resText = [""] } = res.data;
-
     return {
       lang: resLang,
       translations: resText,

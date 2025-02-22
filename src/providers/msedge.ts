@@ -6,7 +6,6 @@ import {
   DetectResponse,
   GetLangsResponse,
   ProviderResponse,
-  ProviderSuccessResponse,
   RequestMethod,
   TranslationResponse,
 } from "@/types/providers/base";
@@ -36,7 +35,7 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0",
   };
-  session: Session | null = null;
+  session?: Session;
 
   constructor(options: BaseProviderOpts = {}) {
     super(options);
@@ -86,12 +85,6 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
     data: T | FailedResponse,
   ): data is FailedResponse {
     return res.status > 399 || Object.hasOwn(data, "error");
-  }
-
-  isSuccessProviderRes<T>(
-    res: ProviderResponse<T>,
-  ): res is ProviderSuccessResponse<T> {
-    return res.success;
   }
 
   async request<T extends object>(
@@ -155,14 +148,8 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
       text = [text];
     }
 
-    let [fromLang, toLang] = lang.split("-");
-    if (!toLang) {
-      toLang = fromLang;
-      fromLang = this.baseLang;
-    }
-
+    const { fromLang, toLang } = this.parseLang(lang);
     const { token } = await this.getSession();
-
     const params = this.getParams({
       from: fromLang,
       // Api support specify several "to" for translation into several languages at once, but I did not implement this
@@ -172,7 +159,6 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
     });
 
     const textArray = text.map((val) => ({ Text: val }));
-
     const res = await this.request<TranslateSuccessResponse>(
       `/translate?${params}`,
       JSON.stringify(textArray),
@@ -198,7 +184,6 @@ export default class MSEdgeTranslateProvider extends BaseProvider {
     lang: Lang = "en-ru",
   ): Promise<TranslationResponse> {
     const res = await this.rawTranslate(text, lang);
-
     const translations = res.data.map(
       (translationItem) => translationItem.translations[0].text,
     );
