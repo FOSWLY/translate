@@ -50,7 +50,10 @@ You can see more code examples [here](https://github.com/FOSWLY/translate/tree/m
 | ✅     | YandexBrowser   | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
 | ✅     | YandexCloud     | Translate<br>Detect<br>GetLangs | 2k chars/req<br>1k chars/req   |
 | ✅     | YandexTranslate | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
+| ✅     | YandexGPT\*¹    | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
 | ✅     | MSEdge          | Translate<br>Detect<br>GetLangs | 50k chars/req<br>50k chars/req |
+
+\*¹ - translation using YandexGPT only works for the en-ru pair, For all other cases, a translation similar to YandexTranslate is used.
 
 ## Build
 

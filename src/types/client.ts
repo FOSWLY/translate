@@ -3,7 +3,6 @@ export type FetchFunction = (
   init?: any,
 ) => Promise<Response>;
 
-// eslint-disable-next-line sonarjs/redundant-type-aliases
 export type Lang = string;
 export type LangPair = `${string}-${string}`;
 
@@ -22,6 +21,10 @@ export enum TranslationService {
    * The total limit of characters per request is 10k chars
    */
   yandextranslate = "yandextranslate",
+  /**
+   * The total limit of characters per request is 10k chars
+   */
+  yandexgpt = "yandexgpt",
   /**
    * The total limit of characters per request is 50k chars
    */

@@ -50,7 +50,10 @@ const langs = await client.getLangs();
 | ✅     | YandexBrowser   | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
 | ✅     | YandexCloud     | Translate<br>Detect<br>GetLangs | 2k chars/req<br>1k chars/req   |
 | ✅     | YandexTranslate | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
+| ✅     | YandexGPT\*¹    | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
 | ✅     | MSEdge          | Translate<br>Detect<br>GetLangs | 50k chars/req<br>50k chars/req |
+
+\*¹ - перевод с помощью YandexGPT работает только для пары en-ru. Для всех остальных случаев используется перевод аналогичный YandexTranslate
 
 ## Сборка
 

@@ -1,4 +1,10 @@
-# 1.x (unreleased)
+# 1.0.5
+
+## Lib
+
+- Added support [new YandexGPT translation model](https://habr.com/ru/companies/yandex/articles/884416/)
+- Removed sonarjs rule comments
+- Rewritted typebox generation logic with `@toil/typebox-genx`
 
 ## Workspace
 
