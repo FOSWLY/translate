@@ -207,8 +207,11 @@ export default class BingTranslateProvider extends BaseProvider {
       throw new TranslateError(res.data);
     }
 
+    const detectedLang =
+      res.data?.[0]?.detectedLanguage?.language ?? origFromLang;
+
     return {
-      lang: `${origFromLang}-${toLang}`,
+      lang: `${detectedLang}-${toLang}`,
       data: res.data,
     };
   }
