@@ -1,6 +1,6 @@
 {
   "name": "@toil/translate",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Toil",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "devDependencies": {
-    "@sinclair/typebox-codegen": "^0.10.5",
+    "@toil/typebox-genx": "^0.0.1",
     "@types/bun": "latest",
     "@types/eslint__js": "^8.42.3",
     "eslint": "^9.20.1",
