@@ -50,7 +50,6 @@ export default class YandexTranslateProvider extends BaseProvider {
   }
 
   genYandexUID() {
-    // eslint-disable-next-line sonarjs/pseudo-random
     return BigInt(Math.floor(Math.random() * this.MAX_UID)).toString();
   }
 
@@ -157,7 +156,7 @@ export default class YandexTranslateProvider extends BaseProvider {
   }
 
   /**
-   * You can use this method if you need a detected language or align
+   * You can use this method if you need also get a detected language or align
    */
   async rawTranslate(
     text: string | string[],
