@@ -1,3 +1,16 @@
+# 1.0.6
+
+## Lib
+
+- Added support Libre Translate
+- Added support Bing Translate
+- Moved `isSuccessProviderRes` method to base provider
+- Some typings improvements
+
+## Workspace
+
+- Bump depends
+
 # 1.0.5
 
 ## Lib
