@@ -45,15 +45,19 @@ You can see more code examples [here](https://github.com/FOSWLY/translate/tree/m
 
 ## Available services
 
-| Status | Service         | Functions                       | Limits                         |
-| ------ | --------------- | ------------------------------- | ------------------------------ |
-| ✅     | YandexBrowser   | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
-| ✅     | YandexCloud     | Translate<br>Detect<br>GetLangs | 2k chars/req<br>1k chars/req   |
-| ✅     | YandexTranslate | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
-| ✅     | YandexGPT\*¹    | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
-| ✅     | MSEdge          | Translate<br>Detect<br>GetLangs | 50k chars/req<br>50k chars/req |
+| Status | Service           | Functions                       | Limits                         |
+| ------ | ----------------- | ------------------------------- | ------------------------------ |
+| ✅     | YandexBrowser     | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
+| ✅     | YandexCloud       | Translate<br>Detect<br>GetLangs | 2k chars/req<br>1k chars/req   |
+| ✅     | YandexTranslate   | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
+| ✅     | YandexGPT\*¹      | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
+| ✅     | MSEdge            | Translate<br>Detect<br>GetLangs | 50k chars/req<br>50k chars/req |
+| ✅     | Bing              | Translate<br>Detect<br>GetLangs | 1k chars/req<br>1k chars/req   |
+| ✅     | LibreTranslate\*² | Translate<br>Detect<br>GetLangs | 2k chars/req<br>2k chars/req   |
 
-\*¹ - translation using YandexGPT only works for the en-ru pair, For all other cases, a translation similar to YandexTranslate is used.
+\*¹ - translation using YandexGPT only works for the en-ru pair, For all other cases, a translation similar to YandexTranslate is used
+
+\*² - by default, obtaining a secret key is disabled. Please install `apiKey` or enable `allowUnsafeEval` when creating the client
 
 ## Build
 

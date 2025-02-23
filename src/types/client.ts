@@ -33,6 +33,10 @@ export enum TranslationService {
    * The total limit of characters per request is 1k chars
    */
   bing = "bing",
+  /**
+   * The total limit of characters per request is 2k chars
+   */
+  libretranslate = "libretranslate",
 }
 
 export type TranslationOpts = {
@@ -42,6 +46,7 @@ export type TranslationOpts = {
   apiUrl?: string;
   apiKey?: string;
   apiExtra?: unknown;
+  allowUnsafeEval?: boolean;
   origin?: string;
   headers?: Record<string, unknown>;
 };

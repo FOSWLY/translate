@@ -45,15 +45,19 @@ const langs = await client.getLangs();
 
 ## Доступные сервисы
 
-| Статус | Сервис          | Функции                         | Лимиты                         |
-| ------ | --------------- | ------------------------------- | ------------------------------ |
-| ✅     | YandexBrowser   | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
-| ✅     | YandexCloud     | Translate<br>Detect<br>GetLangs | 2k chars/req<br>1k chars/req   |
-| ✅     | YandexTranslate | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
-| ✅     | YandexGPT\*¹    | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
-| ✅     | MSEdge          | Translate<br>Detect<br>GetLangs | 50k chars/req<br>50k chars/req |
+| Статус | Сервис            | Функции                         | Лимиты                         |
+| ------ | ----------------- | ------------------------------- | ------------------------------ |
+| ✅     | YandexBrowser     | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
+| ✅     | YandexCloud       | Translate<br>Detect<br>GetLangs | 2k chars/req<br>1k chars/req   |
+| ✅     | YandexTranslate   | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
+| ✅     | YandexGPT\*¹      | Translate<br>Detect<br>GetLangs | 10k chars/req<br>10k chars/req |
+| ✅     | MSEdge            | Translate<br>Detect<br>GetLangs | 50k chars/req<br>50k chars/req |
+| ✅     | Bing              | Translate<br>Detect<br>GetLangs | 1k chars/req<br>1k chars/req   |
+| ✅     | LibreTranslate\*² | Translate<br>Detect<br>GetLangs | 2k chars/req<br>2k chars/req   |
 
 \*¹ - перевод с помощью YandexGPT работает только для пары en-ru. Для всех остальных случаев используется перевод аналогичный YandexTranslate
+
+\*² - по умолчанию получение секретного ключа отключено. Пожалуйста установите `apiKey` или включите `allowUnsafeEval` при создании клиента
 
 ## Сборка
 
