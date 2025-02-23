@@ -25,10 +25,11 @@ export default class TranslationClient {
    */
   fetchOpts!: Record<string, unknown>;
 
-  apiUrl: string | undefined;
-  apiKey: string | undefined;
+  apiUrl?: string;
+  apiKey?: string;
   apiExtra: unknown;
-  origin: string | undefined;
+  origin?: string;
+  allowUnsafeEval?: boolean;
 
   /**
    * Adds headers to the list of headers
@@ -41,10 +42,11 @@ export default class TranslationClient {
     service = TranslationService.yandexbrowser,
     fetchFn = fetchWithTimeout,
     fetchOpts = {},
-    apiUrl = undefined,
-    apiKey = undefined,
-    apiExtra = undefined,
-    origin = undefined,
+    apiUrl,
+    apiKey,
+    apiExtra,
+    origin,
+    allowUnsafeEval = false,
     headers = {},
   }: TranslationOpts = {}) {
     this.changeService({
@@ -54,6 +56,7 @@ export default class TranslationClient {
       apiUrl,
       apiKey,
       apiExtra,
+      allowUnsafeEval,
       origin,
       headers,
     });
@@ -69,6 +72,7 @@ export default class TranslationClient {
     apiUrl = this.apiUrl,
     apiKey = this.apiKey,
     apiExtra = this.apiExtra,
+    allowUnsafeEval = this.allowUnsafeEval,
     origin = this.origin,
     headers = this.headers,
   }: TranslationOpts = {}) {
@@ -78,15 +82,17 @@ export default class TranslationClient {
     this.apiUrl = apiUrl;
     this.apiKey = apiKey;
     this.apiExtra = apiExtra;
+    this.allowUnsafeEval = allowUnsafeEval;
     this.headers = headers;
     this.origin = origin;
     this.provider = new TranslationProvider({
       fetchFn: this.fetch,
       fetchOpts: this.fetchOpts,
-      apiUrl: this.apiUrl ?? undefined,
-      apiKey: this.apiKey ?? undefined,
-      apiExtra: this.apiExtra ?? undefined,
-      origin: this.origin ?? undefined,
+      apiUrl: this.apiUrl,
+      apiKey: this.apiKey,
+      apiExtra: this.apiExtra,
+      allowUnsafeEval: this.allowUnsafeEval,
+      origin: this.origin,
       headers: this.headers,
     }).getProvider(this.service);
   }

@@ -6,6 +6,7 @@ export type BaseProviderOpts = {
   apiUrl?: string; // e.g. schema://domain/api
   apiKey?: string;
   apiExtra?: unknown;
+  allowUnsafeEval?: boolean;
   origin?: string; // schema://domain
   headers?: Record<string, unknown>;
 };

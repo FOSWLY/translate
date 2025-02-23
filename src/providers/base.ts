@@ -14,6 +14,7 @@ import {
 import { fetchWithTimeout } from "@/utils/utils";
 
 export default class BaseProvider {
+  allowUnsafeEval: boolean;
   apiUrl!: string;
   apiExtra?: unknown;
   apiKey?: string;
@@ -32,12 +33,14 @@ export default class BaseProvider {
     apiExtra,
     apiKey,
     origin,
+    allowUnsafeEval = false,
     headers = {},
   }: BaseProviderOpts = {}) {
     this.fetch = fetchFn;
     this.fetchOpts = fetchOpts;
     this.apiExtra = apiExtra;
     this.apiKey = apiKey;
+    this.allowUnsafeEval = !!allowUnsafeEval;
     this.updateData({ apiUrl, headers, origin });
   }
 
