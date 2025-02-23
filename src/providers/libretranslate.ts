@@ -194,7 +194,7 @@ export default class LibreTranslateProvider extends BaseProvider {
     body.append("source", fromLang);
     body.append("target", toLang);
     body.append("format", "text");
-    body.append("alternatives", 0);
+    body.append("alternatives", "0");
     body.append("api_key", this.apiKey ?? "");
     if (this.allowUnsafeEval && this.apiUrl === this.apiUrlPlaceholder) {
       const { token } = await this.getSession();
