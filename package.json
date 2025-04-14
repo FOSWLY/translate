@@ -1,6 +1,6 @@
 {
   "name": "@toil/translate",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "Toil",
   "repository": {
     "type": "git",
@@ -9,19 +9,19 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@toil/typebox-genx": "^0.0.1",
+    "@eslint/js": "^9.24.0",
+    "@toil/typebox-genx": "^0.1.0",
     "@types/bun": "latest",
-    "eslint": "^9.21.0",
-    "eslint-plugin-oxlint": "0.15.11",
+    "eslint": "^9.24.0",
+    "eslint-plugin-oxlint": "0.16.5",
     "husky": "^9.1.7",
-    "oxlint": "^0.15.11",
-    "tsc-alias": "^1.8.10",
+    "oxlint": "^0.16.5",
+    "tsc-alias": "^1.8.15",
     "tsc-esm-fix": "^3.1.2",
-    "typedoc": "^0.27.8",
-    "typedoc-plugin-include-example": "^2.0.2",
-    "typedoc-plugin-rename-defaults": "^0.7.2",
-    "typescript-eslint": "^8.24.1"
+    "typedoc": "^0.27.9",
+    "typedoc-plugin-include-example": "^2.0.3",
+    "typedoc-plugin-rename-defaults": "^0.7.3",
+    "typescript-eslint": "^8.29.1"
   },
   "peerDependencies": {
     "typescript": "^5.7.3"
