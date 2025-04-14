@@ -20,7 +20,7 @@ import { ProviderError, TranslateError } from "@/errors";
 import { getUUID } from "@/utils/secure";
 
 export default class BingTranslateProvider extends BaseProvider {
-  apiUrlPlaceholder = "https://www.bing.com/";
+  apiUrlPlaceholder = "https://www.bing.com";
   originPlaceholder = "https://www.bing.com";
   headers = {
     "Content-Type": "application/x-www-form-urlencoded",
@@ -56,7 +56,7 @@ export default class BingTranslateProvider extends BaseProvider {
       method,
       headers: {
         ...this.headers,
-        Referer: this.origin,
+        Referer: `${this.origin}/translator`,
         Origin: this.origin,
         ...headers,
       },
@@ -183,22 +183,27 @@ export default class BingTranslateProvider extends BaseProvider {
     }
 
     const { token, ig, creationTimestamp } = await this.getSession();
-    const translatorID = tone === "Standard" ? 5026 : 5023;
+    const isStandardTone = tone === "Standard";
+    const translatorID = isStandardTone ? 5026 : 5023;
     const params = this.getParams({
       isVertical: "1",
       IG: ig,
       IID: `translator.${translatorID}`,
     });
 
-    const body = new URLSearchParams([
+    const bodyData: [string, string][] = [
       ["fromLang", fromLang],
       ["to", toLang],
       ["tryFetchingGenderDebiasedTranslations", "true"],
       ["token", token],
       ["key", String(creationTimestamp)],
-      ["tone", tone],
       ["text", text],
-    ]).toString();
+    ];
+    if (!isStandardTone) {
+      bodyData.push(["tone", tone]);
+    }
+
+    const body = new URLSearchParams(bodyData).toString();
     const res = await this.request<TranslateSuccessResponse>(
       `/ttranslatev3?${params}`,
       body,

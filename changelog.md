@@ -1,3 +1,13 @@
+# 1.0.7
+
+## Lib
+
+- Fix Bing Translate with `Standard` tone
+
+## Workspace
+
+- Bump depends
+
 # 1.0.6
 
 ## Lib
