@@ -5,6 +5,7 @@ export type Session = {
   creationTimestamp: number;
   maxAge: number;
   token: string;
+  sessionId: string;
 };
 
 export type LangData = {

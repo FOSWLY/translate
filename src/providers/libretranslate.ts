@@ -21,11 +21,15 @@ import { getTimestamp } from "@/utils/utils";
 import { generateUUIDv4 } from "@/utils/secure";
 
 export default class LibreTranslateProvider extends BaseProvider {
-  apiUrlPlaceholder = "https://libretranslate.com/";
+  apiUrlPlaceholder = "https://libretranslate.com";
   originPlaceholder = "https://libretranslate.com";
   headers = {
     "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    Accept: "*/*",
+    DNT: 1,
   };
   session?: Session;
 
@@ -58,7 +62,6 @@ export default class LibreTranslateProvider extends BaseProvider {
         ...this.headers,
         Referer: this.origin,
         Origin: this.origin,
-        Cookie: `session=${generateUUIDv4()};r=1`,
         ...headers,
       },
       body,
@@ -114,7 +117,7 @@ export default class LibreTranslateProvider extends BaseProvider {
 
     const options = this.getOpts(undefined, undefined, "GET");
     const res = await this.fetch(
-      `${this.apiUrl}/js/app.js?v=1.6.2`,
+      `${this.apiUrl}/js/app.js?v=1.7.1`,
       options,
     ).catch(() => null);
     if (!res || res.status !== 200) {
@@ -128,11 +131,6 @@ export default class LibreTranslateProvider extends BaseProvider {
       throw new ProviderError("Failed to parse secret key");
     }
 
-    // const sessionData =
-    //   /self\[_\s*=\s*String\.fromCharCode,\s*p\s*=\s*parseInt,\s*([^=]+)=\s*([^}]+)/.exec(
-    //     content,
-    //   );
-
     const secretScript =
       /\]\s*=\s*\(_\s*=\s*String\.fromCharCode,\s*(\w)\s*=\s*parseInt,\s*([^;]+)\)/.exec(
         content,
@@ -145,11 +143,21 @@ export default class LibreTranslateProvider extends BaseProvider {
     const evalLine = execLine
       .replaceAll(replacedChar, "parseInt")
       .replaceAll("_", "String.fromCharCode");
+
+    const cookies = res.headers.getSetCookie();
+    const sessionCookie = cookies.find((cookie) =>
+      cookie.startsWith("session="),
+    );
+    const sessionId =
+      sessionCookie?.split(";")[0].split("=")[1] ?? generateUUIDv4();
+
+    // oxlint-disable-next-line no-eval
     const token = atob(eval(evalLine) as string);
     return {
       creationTimestamp: getTimestamp(),
       maxAge: 3600,
       token,
+      sessionId,
     };
   }
 
@@ -194,16 +202,26 @@ export default class LibreTranslateProvider extends BaseProvider {
     body.append("source", fromLang);
     body.append("target", toLang);
     body.append("format", "text");
-    body.append("alternatives", "0");
+    body.append("alternatives", "3");
     body.append("api_key", this.apiKey ?? "");
+    const headers: Record<string, string> = {};
     if (this.allowUnsafeEval && this.apiUrl === this.apiUrlPlaceholder) {
-      const { token } = await this.getSession();
+      const { token, sessionId } = await this.getSession();
       body.append("secret", token);
+      headers.Cookie = `r=1; session=${sessionId}`;
+      const search = new URLSearchParams({
+        source: fromLang,
+        target: toLang,
+        q: text,
+      }).toString();
+
+      headers.Referer = `${this.originPlaceholder}/?${search}`;
     }
 
     const res = await this.request<TranslateSuccessResponse>(
       "/translate",
       body,
+      headers,
     );
     if (!this.isSuccessProviderRes<TranslateSuccessResponse>(res)) {
       throw new TranslateError(res.data);
