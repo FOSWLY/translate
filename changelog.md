@@ -1,3 +1,17 @@
+# 1.0.8
+
+## Lib
+
+- Added support Opera Aria AI translate/detect language (Has banned topics + has Geo restrictions)
+- Improved bypass Libre Translate secure
+- Fixed Yandex Cloud translate without API key
+- Bumped Libre Translate script version
+- Yandex Cloud types interfaces replaced with types
+
+## Workspace
+
+- Bump depends
+
 # 1.0.7
 
 ## Lib
