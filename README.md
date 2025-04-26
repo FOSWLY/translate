@@ -54,10 +54,13 @@ You can see more code examples [here](https://github.com/FOSWLY/translate/tree/m
 | ✅     | MSEdge            | Translate<br>Detect<br>GetLangs | 50k chars/req<br>50k chars/req |
 | ✅     | Bing              | Translate<br>Detect<br>GetLangs | 1k chars/req<br>1k chars/req   |
 | ✅     | LibreTranslate\*² | Translate<br>Detect<br>GetLangs | 2k chars/req<br>2k chars/req   |
+| ✅     | OperaAria\*³      | Translate<br>Detect<br>GetLangs | 1k chars/req<br>6k chars/req   |
 
 \*¹ - translation using YandexGPT only works for the en-ru pair, For all other cases, a translation similar to YandexTranslate is used
 
-\*² - by default, obtaining a secret key is disabled. Please install `apiKey` or enable `allowUnsafeEval` when creating the client
+\*² - by default, obtaining a secret key is disabled. Please install `apiKey` or enable `allowUnsafeEval` when creating the client. With `allowUnsafeEval` some requests may result in an error, probably due to some hard limits on the service side
+
+\*³ - translation using OperaAria prohibits the translation of certain forbidden topics and also has geo-restrictions for some countries. The translation is performed using a neural network and may return unexpected results
 
 ## Build
 

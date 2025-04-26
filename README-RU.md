@@ -54,10 +54,13 @@ const langs = await client.getLangs();
 | ✅     | MSEdge            | Translate<br>Detect<br>GetLangs | 50k chars/req<br>50k chars/req |
 | ✅     | Bing              | Translate<br>Detect<br>GetLangs | 1k chars/req<br>1k chars/req   |
 | ✅     | LibreTranslate\*² | Translate<br>Detect<br>GetLangs | 2k chars/req<br>2k chars/req   |
+| ✅     | OperaAria\*³      | Translate<br>Detect<br>GetLangs | 1k chars/req<br>6k chars/req   |
 
 \*¹ - перевод с помощью YandexGPT работает только для пары en-ru. Для всех остальных случаев используется перевод аналогичный YandexTranslate
 
-\*² - по умолчанию получение секретного ключа отключено. Пожалуйста установите `apiKey` или включите `allowUnsafeEval` при создании клиента
+\*² - по умолчанию получение секретного ключа отключено. Пожалуйста установите `apiKey` или включите `allowUnsafeEval` при создании клиента. С `allowUnsafeEval` часть запросов может заканчиваться ошибкой, видимо из-за каких-то жестких рейтлимитов на стороне сервиса
+
+\*³ - перевод с помощью OperaAria запрещает некоторые запрещенные темы, а так же имеет гео-ограничения для части стран. Перевод выполняется с помощью нейросети и может возвращать неожиданный результат
 
 ## Сборка
 
