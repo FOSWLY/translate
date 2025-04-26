@@ -37,6 +37,12 @@ export enum TranslationService {
    * The total limit of characters per request is 2k chars
    */
   libretranslate = "libretranslate",
+  /**
+   * Translate limit is 1k chars
+   *
+   * Detect limit is 6k chars
+   */
+  operaaria = "operaaria",
 }
 
 export type TranslationOpts = {

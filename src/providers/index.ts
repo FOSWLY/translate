@@ -8,6 +8,7 @@ import YandexGPTProvider from "./yandexgpt";
 import MSEdgeTranslateProvider from "./msedge";
 import BingTranslateProvider from "./bing";
 import LibreTranslateProvider from "./libretranslate";
+import OperaAriaProvider from "./operaaria";
 
 export { default as BaseProvider } from "./base";
 export { default as YandexBrowserProvider } from "./yandexbrowser";
@@ -17,6 +18,7 @@ export { default as YandexGPTProvider } from "./yandexgpt";
 export { default as MSEdgeTranslateProvider } from "./msedge";
 export { default as BingTranslateProvider } from "./bing";
 export { default as LibreTranslateProvider } from "./libretranslate";
+export { default as OperaAriaProvider } from "./operaaria";
 
 export const availableProviders = {
   [TranslationService.yandexbrowser]: YandexBrowserProvider,
@@ -26,6 +28,7 @@ export const availableProviders = {
   [TranslationService.msedge]: MSEdgeTranslateProvider,
   [TranslationService.bing]: BingTranslateProvider,
   [TranslationService.libretranslate]: LibreTranslateProvider,
+  [TranslationService.operaaria]: OperaAriaProvider,
 };
 
 export type AvailableTranslationProviders = typeof availableProviders;

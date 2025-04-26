@@ -18,3 +18,30 @@ export function generateUUIDv4() {
     return value.toString(16);
   });
 }
+
+const windowsNames = [
+  "admin",
+  "administrator",
+  "user",
+  "guest",
+  "root",
+  "manager",
+  "pc",
+  "windows",
+  "msi",
+  "asus",
+  "lenovo",
+  "acer",
+];
+
+export function randomDeviceName() {
+  return windowsNames[Math.floor(Math.random() * windowsNames.length)];
+}
+
+export function randomBase64(length = 32) {
+  return btoa(
+    String.fromCharCode(
+      ...Array.from({ length }, () => Math.floor(Math.random() * 256)),
+    ),
+  );
+}
