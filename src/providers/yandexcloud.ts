@@ -12,8 +12,11 @@ import {
 } from "@/types/providers/base";
 import {
   DetectSuccessResponse,
+  FailedErrorResponse,
+  FailedMessageResponse,
   FailedResponse,
   GetLangsSuccessResponse,
+  TranslateBodyRequest,
   TranslateSuccessResponse,
 } from "@/types/providers/yandexcloud";
 import {
@@ -63,7 +66,11 @@ export default class YandexCloudProvider extends BaseProvider {
     res: Response,
     data: T | FailedResponse,
   ): data is FailedResponse {
-    return res.status > 399 || Object.hasOwn(data, "message");
+    return (
+      res.status > 399 ||
+      Object.hasOwn(data, "message") ||
+      Object.hasOwn(data, "error")
+    );
   }
 
   async request<T extends object>(
@@ -78,7 +85,11 @@ export default class YandexCloudProvider extends BaseProvider {
       const res = await this.fetch(`${this.apiUrl}${path}`, options);
       const data = (await res.json()) as T;
       if (this.isErrorRes<T>(res, data)) {
-        throw new ProviderError(data.message ?? res.statusText);
+        throw new ProviderError(
+          (data as FailedMessageResponse).message ??
+            (data as FailedErrorResponse).error ??
+            res.statusText,
+        );
       }
 
       return {
@@ -93,6 +104,21 @@ export default class YandexCloudProvider extends BaseProvider {
     }
   }
 
+  async rawDetect(text: string): Promise<DetectSuccessResponse> {
+    const res = await this.request<DetectSuccessResponse>(
+      "/detect",
+      JSON.stringify({
+        text,
+        languageCodeHints: [], // lang code
+      }),
+    );
+    if (!this.isSuccessProviderRes<DetectSuccessResponse>(res)) {
+      throw new DetectError(res.data);
+    }
+
+    return res.data;
+  }
+
   /**
    * The total limit of characters per request is 2k chars
    */
@@ -105,13 +131,20 @@ export default class YandexCloudProvider extends BaseProvider {
     }
 
     const { fromLang, toLang } = this.parseLang(lang);
+    const body: TranslateBodyRequest = {
+      sourceLanguageCode: fromLang,
+      targetLanguageCode: toLang,
+      texts: text,
+    };
+
+    if (!this.apiKey) {
+      const { translationId } = await this.rawDetect(text[0]);
+      body.translationId = translationId;
+    }
+
     const res = await this.request<TranslateSuccessResponse>(
       "/translate",
-      JSON.stringify({
-        sourceLanguageCode: fromLang,
-        targetLanguageCode: toLang,
-        texts: text,
-      }),
+      JSON.stringify(body),
     );
 
     if (!this.isSuccessProviderRes<TranslateSuccessResponse>(res)) {
@@ -132,18 +165,7 @@ export default class YandexCloudProvider extends BaseProvider {
    * The total limit of characters per request is 1k chars
    */
   async detect(text: string): Promise<DetectResponse> {
-    const res = await this.request<DetectSuccessResponse>(
-      "/detect",
-      JSON.stringify({
-        text,
-        languageCodeHints: [], // lang code
-      }),
-    );
-    if (!this.isSuccessProviderRes<DetectSuccessResponse>(res)) {
-      throw new DetectError(res.data);
-    }
-
-    const { languageCode: resLang } = res.data;
+    const { languageCode: resLang } = await this.rawDetect(text);
     if (!resLang) {
       throw new DetectEmptyLangError(text);
     }
