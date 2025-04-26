@@ -55,12 +55,12 @@ export default class YandexBrowserProvider extends BaseProvider {
         Origin: this.origin,
         ...headers,
       },
-      body: body
-        ? body
-        : new URLSearchParams({
-            maxRetryCount: "2",
-            fetchAbortTimeout: "500",
-          }),
+      body:
+        body ??
+        new URLSearchParams({
+          maxRetryCount: "2",
+          fetchAbortTimeout: "500",
+        }),
       ...this.fetchOpts,
     };
   }
