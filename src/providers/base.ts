@@ -127,13 +127,13 @@ export default class BaseProvider {
   }
 
   async translate(
-    text: string | string[],
-    lang: Lang = "en-ru",
+    _text: string | string[],
+    _lang: Lang = "en-ru",
   ): Promise<TranslationResponse> {
     throw new NotSupportMethodError();
   }
 
-  async detect(text: string): Promise<DetectResponse> {
+  async detect(_text: string): Promise<DetectResponse> {
     throw new NotSupportMethodError();
   }
 
