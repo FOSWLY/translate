@@ -18,7 +18,7 @@
     "oxlint": "^0.16.7",
     "tsc-alias": "^1.8.15",
     "tsc-esm-fix": "^3.1.2",
-    "typedoc": "^0.27.9",
+    "typedoc": "^0.28.5",
     "typedoc-plugin-include-example": "^2.0.3",
     "typedoc-plugin-rename-defaults": "^0.7.3",
     "typescript-eslint": "^8.31.0"
