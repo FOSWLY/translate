@@ -23,9 +23,11 @@ import { generateUUIDv4 } from "@/utils/secure";
 export default class LibreTranslateProvider extends BaseProvider {
   apiUrlPlaceholder = "https://libretranslate.com";
   originPlaceholder = "https://libretranslate.com";
+  LIBRE_APP_VER = "1.9.6";
+
   headers = {
     "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
     "Accept-Language": "en-US,en;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
     Accept: "*/*",
@@ -117,7 +119,7 @@ export default class LibreTranslateProvider extends BaseProvider {
 
     const options = this.getOpts(undefined, undefined, "GET");
     const res = await this.fetch(
-      `${this.apiUrl}/js/app.js?v=1.7.1`,
+      `${this.apiUrl}/js/app.js?v=${this.LIBRE_APP_VER}`,
       options,
     ).catch(() => null);
     if (!res || res.status !== 200) {
