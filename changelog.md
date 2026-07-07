@@ -1,3 +1,18 @@
+# 1.0.9
+
+## Lib
+
+- Updated provider user agents
+- Bumped Libre Translate script version to `1.9.6`
+- Marked Opera Aria provider as unstable in docs
+
+## Workspace
+
+- Bump depends
+- Replaced **ESLint**/**Prettier**/**Husky** with **Oxlint**/**Oxfmt**/**Lefthook**
+- Updated build script to reuse `build:default` and clean `dist` via Node fs
+- Migrated doc examples to `typedoc-plugin-include-example` v3
+
 # 1.0.8
 
 ## Lib
