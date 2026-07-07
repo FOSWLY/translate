@@ -23,8 +23,7 @@ export interface TranslateSuccessResponse extends MinimalResponse {
   text: string[];
 }
 
-export interface TranslateDetailSuccessResponse
-  extends TranslateSuccessResponse {
+export interface TranslateDetailSuccessResponse extends TranslateSuccessResponse {
   align?: string[];
   detected?: Record<"lang", Lang>;
 }

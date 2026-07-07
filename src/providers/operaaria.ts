@@ -36,7 +36,7 @@ export default class OperaAriaProvider extends BaseProvider {
   headers = {
     "content-type": "application/json",
     "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 OPR/118.0.0.0",
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36 OPR/134.0.0.0",
   };
   clientSecret =
     "p3qX12F3v7Nxu+wOarmRwIMbtDGJm0+jj2ngSx6d05Z4c+2heqm3Ttuilcxdflqv";
