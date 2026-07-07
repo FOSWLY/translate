@@ -32,5 +32,12 @@
     },
     "removeComments": true
   },
-  "exclude": ["./dist", "./tests", "./examples", "./scripts", "node_modules"]
+  "exclude": [
+    "./dist",
+    "./tests",
+    "./debug",
+    "./examples",
+    "./scripts",
+    "node_modules"
+  ]
 }

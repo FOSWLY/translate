@@ -1,22 +1,30 @@
 import path from "node:path";
+import fs from "node:fs/promises";
+
 import { $ } from "bun";
 import { GenX } from "@toil/typebox-genx";
 
 import { name } from "../package.json";
 
+const root = path.join(__dirname, "..");
+const distPath = path.join(root, "dist");
+
 async function build() {
   console.log(`Building ${name}...`);
   $.cwd("./");
-  await $`rm -rf dist`;
-  await $`tsc --project tsconfig.build.json --outdir ./dist && tsc-alias -p tsconfig.build.json && tsc-esm-fix --tsconfig tsconfig.build.json`;
-  const packagePath = path.join(__dirname, "..");
+  await fs.rm(distPath, {
+    recursive: true,
+    force: true,
+  });
+
+  await $`bun run build:default`;
   const genx = new GenX({
-    root: packagePath,
+    root,
   });
   await $`mkdir dist/typebox`;
   await genx.generateByDir(
-    path.resolve(packagePath, "src", "types"),
-    path.resolve(packagePath, "dist", "typebox"),
+    path.resolve(root, "src", "types"),
+    path.resolve(root, "dist", "typebox"),
   );
   $.cwd("./");
 }

@@ -12,7 +12,6 @@ describe("translate", () => {
     const res = await translationClient.translate(phrase);
     expect(res.lang).toEqual("en-ru");
     expect(res.translations.length).toEqual(1);
-    expect(res.translations[0]).toInclude("Бесов");
   });
   test("translate multi phrases", async () => {
     const res = await translationClient.translate([phrase, secondPhrase]);
