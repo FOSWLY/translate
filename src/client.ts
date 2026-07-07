@@ -16,7 +16,7 @@ export default class TranslationClient {
 
   /**
    * If you don't want to use the classic fetch
-   * @includeExample examples/with_ofetch.ts:1-15
+   * @includeExample examples/with_ofetch.ts[1:15]
    */
   fetch!: FetchFunction;
 
