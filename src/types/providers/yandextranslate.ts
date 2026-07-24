@@ -1,12 +1,11 @@
 import { Lang, LangPair } from "../client";
 
-export type Srv = "tr-text" | "tr-image";
+export type Srv = "tr-text" | "tr-image" | "yabrowser-v2" | "yabrowser-ocr";
 export type Session = {
   creationTimestamp: number; // in secs
   id: string;
   maxAge: number;
-  status: string; // active
-  statusCode: number;
+  requestsCount: number;
 };
 export type SessionResponse = Record<"session", Session>;
 

@@ -16,7 +16,6 @@ import {
   FailedResponse,
   GetLangsSuccessResponse,
   Session,
-  SessionResponse,
   Srv,
   TranslateDetailSuccessResponse,
   TranslateOptions,
@@ -64,7 +63,38 @@ export default class YandexTranslateProvider extends BaseProvider {
     };
   }
 
-  async getSession() {
+  generateSid() {
+    let sId = Date.now().toString(16);
+    const missingChars = 16 - sId.length;
+    for (let i = 0; i < missingChars; i++) {
+      sId += Math.floor(Math.random() * 16).toString(16);
+    }
+    return sId;
+  }
+
+  createSession(): Session {
+    return {
+      creationTimestamp: getTimestamp(),
+      id: this.generateSid(),
+      maxAge: 3600,
+      requestsCount: 0,
+    };
+  }
+
+  getId() {
+    let { id, requestsCount } = this.getSession();
+    return `${id}-${requestsCount++}-0`;
+  }
+
+  incrRequestsCount() {
+    if (!this.session) {
+      this.session = this.createSession();
+    }
+
+    this.session.requestsCount++;
+  }
+
+  getSession() {
     const timestamp = getTimestamp();
     if (
       this.session &&
@@ -73,7 +103,7 @@ export default class YandexTranslateProvider extends BaseProvider {
       return this.session;
     }
 
-    this.session = await this.createSession();
+    this.session = this.createSession();
     return this.session;
   }
 
@@ -136,18 +166,6 @@ export default class YandexTranslateProvider extends BaseProvider {
     }
   }
 
-  async createSession() {
-    const res = await this.request<SessionResponse>(
-      `/sessions?${this.getParams("tr-text")}`,
-    );
-
-    if (!this.isSuccessProviderRes<SessionResponse>(res)) {
-      throw new ProviderError("Failed to request create session");
-    }
-
-    return res.data.session;
-  }
-
   /**
    * You can use this method if you need also get a detected language or align
    */
@@ -162,20 +180,20 @@ export default class YandexTranslateProvider extends BaseProvider {
     }
 
     const { fromLang, toLang } = this.parseLang(lang);
-    const { id: sid } = await this.getSession();
-    const params = this.getParams("tr-text", {
-      sid: `${sid}-5-0`,
+    const id = this.getId();
+    const srv: Srv = format === "html" ? "tr-image" : "tr-text";
+    const params = this.getParams(srv, {
+      id,
       source_lang: fromLang,
       target_lang: toLang,
       // paste / ocr / type-end
-      reason: "paste",
+      reason: "ocr",
       format,
       // 0 - default
       // 1 - add random spaces before symbols + don't translate set of chars like testdfgdsazd
       // 2 - translate with html tags names (bad quality of translation + don't translate unknown words like test123), maybe it's enable old version
       strategy: "0",
       disable_cache: "false",
-      ajax: "1",
     });
 
     const textArray: readonly [string, string][] = text.map((val) => [
@@ -187,11 +205,11 @@ export default class YandexTranslateProvider extends BaseProvider {
       ...textArray,
     ]);
 
+    this.incrRequestsCount();
     const res = await this.request<TranslateDetailSuccessResponse>(
       `/translate?${params}`,
       body,
     );
-
     if (!this.isSuccessProviderRes<TranslateDetailSuccessResponse>(res)) {
       throw new TranslateError(res.data);
     }
@@ -229,13 +247,14 @@ export default class YandexTranslateProvider extends BaseProvider {
     text: string,
     options: DetectOptions = DetectOptions.withCurrentProb,
   ) {
-    const { id: sid } = await this.getSession();
+    const { id: sid } = this.getSession();
     const params = this.getParams("tr-text", {
       sid,
       text,
       options,
     });
 
+    this.incrRequestsCount();
     const res = await this.request<DetectDetailSuccessResponse>(
       `/detect?${params}`,
       undefined,

@@ -1,3 +1,16 @@
+# 1.10.0
+
+## Lib
+
+- Fixed Yandex Translate with `html` format
+- Updated Yandex Translate session logic:
+  - now, it's use local generation instead of old request `/sessions` endpoint
+  - now, we send real `requestsCount` in `id` param
+
+## Workspace
+
+- Bump depends
+
 # 1.0.9
 
 ## Lib
