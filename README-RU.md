@@ -66,23 +66,25 @@ const langs = await client.getLangs();
 
 Для сборки необходимо наличие:
 
-- [Bun](https://bun.sh/)
+- [Node](https://nodejs.org/) или [Bun](https://bun.sh/)
 
 Не забудьте установить зависимости:
 
 ```bash
-bun install
+npm install
 ```
 
 Запустите сборку:
 
 ```bash
-bun build:all
+npm run build:all
 ```
 
 ## Тесты
 
 Библиотека имеет минимальное покрытие тестами для проверки ее работоспособности.
+
+Для запуска тестов вам необходим Bun.
 
 Запустить тесты:
 

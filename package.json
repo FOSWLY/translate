@@ -13,8 +13,7 @@
     "lefthook": "^2.2.2",
     "oxfmt": "^0.79.0",
     "oxlint": "^1.94.0",
-    "tsc-alias": "^1.9.10",
-    "tsc-esm-fix": "^3.1.2",
+    "tsdown": "^0.23.7",
     "typedoc": "^0.28.20",
     "typedoc-plugin-include-example": "^3.0.2",
     "typedoc-plugin-rename-defaults": "^0.7.3"
@@ -85,12 +84,12 @@
   },
   "scripts": {
     "test": "bun test",
-    "build:default": "tsc --project tsconfig.build.json --outdir ./dist && tsc-alias -p tsconfig.build.json && tsc-esm-fix --tsconfig tsconfig.build.json",
+    "build": "tsdown",
     "build:doc": "typedoc --options typedoc.json --tsconfig tsconfig.build.json",
-    "build:bun": "bun run ./scripts/build.ts",
-    "build:all": "bun build:bun && bun build:doc",
-    "lint": "bunx oxlint",
-    "lint:fix": "bunx oxlint --fix",
+    "build:bun": "bun run build",
+    "build:all": "npm run build:bun && npm run build:doc",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check"
   },

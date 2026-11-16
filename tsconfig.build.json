@@ -38,6 +38,7 @@
     "./debug",
     "./examples",
     "./scripts",
+    "./tsdown.config.ts",
     "node_modules"
   ]
 }

@@ -66,26 +66,28 @@ You can see more code examples [here](https://github.com/FOSWLY/translate/tree/m
 
 To build, you must have:
 
-- [Bun](https://bun.sh/)
+- [Node](https://nodejs.org/) or [Bun](https://bun.sh/)
 
 Don't forget to install the dependencies:
 
 ```bash
-bun install
+npm install
 ```
 
 Start building:
 
 ```bash
-bun build:all
+npm run build:all
 ```
 
 ## Tests
 
 The library has minimal test coverage to check it's performance.
 
+To run tests you should have Bun.
+
 Run the tests:
 
 ```bash
-bun test
+npm run test
 ```

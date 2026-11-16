@@ -7,6 +7,7 @@
 
 ## Workspace
 
+- Migrate build logic to TSDown. Also, now you can build lib with Node
 - Bump depends
 
 # 1.10.0
