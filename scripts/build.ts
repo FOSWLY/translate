@@ -2,7 +2,6 @@ import path from "node:path";
 import fs from "node:fs/promises";
 
 import { $ } from "bun";
-import { GenX } from "@toil/typebox-genx";
 
 import { name } from "../package.json";
 
@@ -18,14 +17,6 @@ async function build() {
   });
 
   await $`bun run build:default`;
-  const genx = new GenX({
-    root,
-  });
-  await $`mkdir dist/typebox`;
-  await genx.generateByDir(
-    path.resolve(root, "src", "types"),
-    path.resolve(root, "dist", "typebox"),
-  );
   $.cwd("./");
 }
 

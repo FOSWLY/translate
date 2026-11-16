@@ -1,3 +1,14 @@
+# 1.11.0
+
+## Lib
+
+- Removed typebox support
+- Bump user agent
+
+## Workspace
+
+- Bump depends
+
 # 1.10.0
 
 ## Lib

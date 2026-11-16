@@ -5,7 +5,7 @@
 [![en](https://img.shields.io/badge/lang-English%20%F0%9F%87%AC%F0%9F%87%A7-white)](README.md)
 [![ru](https://img.shields.io/badge/%D1%8F%D0%B7%D1%8B%D0%BA-%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%20%F0%9F%87%B7%F0%9F%87%BA-white)](README-RU.md)
 
-Библиотека для бесплатного и не только использования различных API перевода, которая поддерживает работу с JavaScript, TypeScript, а также имеет встроенные разделенные типы для Typebox.
+Библиотека для бесплатного и не только использования различных API перевода, которая поддерживает работу с JavaScript и TypeScript.
 
 ## Установка
 
@@ -54,13 +54,13 @@ const langs = await client.getLangs();
 | ✅     | MSEdge            | Translate<br>Detect<br>GetLangs | 50k chars/req<br>50k chars/req |
 | ✅     | Bing              | Translate<br>Detect<br>GetLangs | 1k chars/req<br>1k chars/req   |
 | ✅     | LibreTranslate\*² | Translate<br>Detect<br>GetLangs | 2k chars/req<br>2k chars/req   |
-| ✅     | OperaAria\*³      | Translate<br>Detect<br>GetLangs | 1k chars/req<br>6k chars/req   |
+| ⚠️     | OperaAria\*³      | Translate<br>Detect<br>GetLangs | 1k chars/req<br>6k chars/req   |
 
 \*¹ - перевод с помощью YandexGPT работает только для пары en-ru. Для всех остальных случаев используется перевод аналогичный YandexTranslate
 
 \*² - по умолчанию получение секретного ключа отключено. Пожалуйста установите `apiKey` или включите `allowUnsafeEval` при создании клиента. С `allowUnsafeEval` часть запросов может заканчиваться ошибкой, видимо из-за каких-то жестких рейтлимитов на стороне сервиса
 
-\*³ - перевод с помощью OperaAria запрещает некоторые запрещенные темы, а так же имеет гео-ограничения для части стран. Перевод выполняется с помощью нейросети и может возвращать неожиданный результат
+\*³ - перевод с помощью OperaAria запрещает некоторые запрещенные темы, а так же имеет гео-ограничения для части стран. Перевод выполняется с помощью нейросети и может возвращать неожиданный результат. Последний раз тестировалось в 2025 году
 
 ## Сборка
 
